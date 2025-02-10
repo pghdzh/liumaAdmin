@@ -1,0 +1,36 @@
+{
+  "name": "dao-admin-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vue-tsc --noEmit --skipLibCheck && vite build",
+    "preview": "vite preview",
+    "prod": "vite build --mode production"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "axios": "^1.6.5",
+    "dayjs": "^1.11.13",
+    "element-plus": "^2.5.5",
+    "markdown-it": "^14.1.0",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.9",
+    "pinia-plugin-persistedstate": "^1.6.3",
+    "vue": "^3.3.11",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.19.2",
+    "sass": "^1.71.1",
+    "sass-loader": "^13.3.3",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vue-tsc": "^1.8.25"
+  }
+}
