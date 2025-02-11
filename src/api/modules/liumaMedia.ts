@@ -14,7 +14,7 @@ export const addLiumaMedia = (data: any) => {
  * @param {object} params - 例如：{ sortBy: "likes", order: "DESC", page: 1, pageSize: 10 }
  */
 export const getLiumaMediaList = (params: any): any => {
-  return http.get("/api/liuma-media", { params });
+  return http.get("/api/liuma-media", params);
 };
 
 /**
@@ -46,5 +46,5 @@ export const deleteLiumaMedia = (mediaId: number): any => {
  * @function 批量删除所有流麻图片
  */
 export const deleteAllLiumaMedia = (): any => {
-  return http.delete(`/api/liuma-media/all`);
+  return http.delete(`/api/liuma-media/deleteAll`);
 };

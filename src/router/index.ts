@@ -23,9 +23,14 @@ const router = createRouter({
           component: () => import("@/views/HomeView/index.vue"),
         },
         {
-          path: "/courseManagement",
-          name: "courseManagement",
-          component: () => import("@/views/courseManage/index.vue"),
+          path: "/liumaManagement",
+          name: "liumaManagement",
+          component: () => import("@/views/liumaManage/index.vue"),
+        },
+        {
+          path: "/AIGeneratedImageManage",
+          name: "AIGeneratedImageManage",
+          component: () => import("@/views/AIGeneratedImageManage/index.vue"),
         },
       ],
     },

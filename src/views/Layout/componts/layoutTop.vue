@@ -4,7 +4,7 @@
       <div class="logo">
         <img src="~@/assets/img/logo.png" alt="LOGO" />
       </div>
-      <span class="platform-name">学生管理系统-颖姐专用</span>
+      <span class="platform-name">流麻管理系统-霜落专用</span>
     </div>
     <div class="head-layout-right flex align-center">
       <div class="boxes-icon flex justify-center align-center">

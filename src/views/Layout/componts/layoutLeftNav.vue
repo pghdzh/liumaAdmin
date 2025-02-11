@@ -1,10 +1,6 @@
 <template>
   <div class="menu-layout">
-    <el-menu
-      class="el-menu-vertical-demo"
-      :router="true"
-      :default-active="$route.path"
-    >
+    <el-menu class="el-menu-vertical-demo" :router="true" :default-active="$route.path">
       <el-menu-item v-for="item in navList" :index="item.path" :key="item.path">
         <template #title>
           <component :is="item.icon" style="width: 16px; margin-right: 20px" />
@@ -38,11 +34,16 @@ const navList = reactive<any>([
     icon: "House",
   },
   {
-    title: "课程管理",
+    title: "流麻管理",
     icon: "Menu",
-    path: "/courseManagement",
+    path: "/liumaManagement",
   },
- 
+  {
+    title: 'AI绘图管理',
+    icon: 'Menu',
+    path: '/AIGeneratedImageManage'
+  }
+
 ]);
 
 const menuList = reactive([
