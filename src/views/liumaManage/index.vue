@@ -37,11 +37,11 @@
       </el-table-column>
 
       <!-- 视频链接 -->
-      <el-table-column label="视频" align="center">
+      <el-table-column label="视频地址" align="center">
         <template #default="{ row }">
-          <el-button v-if="row.video_url" type="primary" link @click="openVideo(row.video_url)">
-            预览视频
-          </el-button>
+          <span v-if="row.video_url">
+            {{ row.video_url }}
+          </span>
           <span v-else>无</span>
         </template>
       </el-table-column> <!-- 上传时间 -->
