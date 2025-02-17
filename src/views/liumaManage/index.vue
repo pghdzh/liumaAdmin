@@ -284,7 +284,6 @@ const openAdd = (row: any) => {
     dialogTitle.value = "修改流麻";
   } else {
     dialogTitle.value = "新增流麻";
-    addFormData.value = {};
     uploadedImage.value = null
   }
   addVisible.value = true;

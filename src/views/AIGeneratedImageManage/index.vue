@@ -252,7 +252,7 @@ const openAdd = (row: any) => {
     dialogTitle.value = "修改AI生成图片";
   } else {
     dialogTitle.value = "新增AI生成图片";
-    addFormData.value = {};
+   
     uploadedImage.value = null;
   }
   addVisible.value = true;
