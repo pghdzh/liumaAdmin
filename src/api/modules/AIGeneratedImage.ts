@@ -1,14 +1,6 @@
 import http from "../axios";
 
-/**
- * @function 上传 AI 生成的图片（返回存储路径）
- * @param {File} file - 需要上传的图片文件
- */
-export const uploadAIImage = (file: File) => {
-  const formData = new FormData();
-  formData.append("image", file);
-  return http.post("/api/aiImages/upload", formData);
-};
+
 
 /**
  * @function 添加 AI 生成的图片数据
@@ -16,6 +8,14 @@ export const uploadAIImage = (file: File) => {
  */
 export const addAIImage = (data: any) => {
   return http.post("/api/aiImages", data);
+};
+
+/**
+ * @function 批量添加 AI 生成的图片数据
+ * @param {object} data - 例如：{ image_name: "AI 图片", image_path: "uploads/aiImg/xxx.jpg", description: "描述", likes: 0 }
+ */
+export const addAIImageMultiple = (data: any) => {
+  return http.post("/api/aiImages/createImagesMultiple", data);
 };
 
 /**
@@ -55,5 +55,5 @@ export const deleteAIImage = (imageId: number): any => {
  * @function 批量删除所有 AI 生成的图片
  */
 export const deleteAllAIImages = (): any => {
-  return http.delete(`/api/aiImages/deleteAll`);
+  return http.delete(`/api/aiImages/`);
 };

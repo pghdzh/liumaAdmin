@@ -4,6 +4,9 @@
       <el-button type="primary" style="margin-left: 20px" @click="openAdd(null)">
         新增
       </el-button>
+      <el-button type="primary" style="margin-left: 20px" @click="addVisibleMultiple = true">
+        批量新增
+      </el-button>
       <el-button type="danger" style="margin-left: 20px" @click="deleteAllAIImagesReq">
         删除全部生成的图片</el-button>
     </div>
@@ -96,13 +99,49 @@
         </div>
       </template>
     </el-dialog>
+
+    <el-dialog v-model="addVisibleMultiple" title="批量上传" center width="600">
+      <div class="upload-container">
+        <!-- 批量上传组件 -->
+        <el-upload class="upload-box" name="image" action="http://localhost:3000/api/aiImages/upload-ai-image"
+          list-type="picture-card" :on-success="handleUploadSuccessMultiple" :before-upload="checkFileSizeMultiple"
+          :show-file-list="true" accept="image/*" multiple ref="uploadRef">
+          <el-button type="primary">上传图片</el-button>
+        </el-upload>
+      </div>
+
+      <!-- 录入AI生成信息 -->
+      <el-form label-width="80px">
+        <el-form-item label="标题">
+          <el-input v-model="addFormDataMultiple.image_name" />
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="addFormDataMultiple.description" />
+        </el-form-item>
+        <el-form-item label="方向">
+          <el-select v-model="addFormDataMultiple.orientation">
+            <el-option label="竖向" :value="1" />
+            <el-option label="横向" :value="2" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitDataMultiple" style="margin-right: 30px">
+            确定
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
+
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { Delete, Edit } from "@element-plus/icons-vue";
-import { uploadAIImage, addAIImage, getAIImageList, updateAIImage, deleteAIImage, deleteAllAIImages } from "@/api/modules/AIGeneratedImage";
+import { addAIImage, addAIImageMultiple, getAIImageList, updateAIImage, deleteAIImage, deleteAllAIImages } from "@/api/modules/AIGeneratedImage";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 
@@ -252,12 +291,60 @@ const openAdd = (row: any) => {
     dialogTitle.value = "修改AI生成图片";
   } else {
     dialogTitle.value = "新增AI生成图片";
-   
+
     uploadedImage.value = null;
   }
   addVisible.value = true;
 };
 
+//批量新增
+const addVisibleMultiple = ref(false)
+const uploadedImages = ref([]); // 存储已上传的图片路径
+const addFormDataMultiple = ref({
+  image_name: '',
+  description: '',
+  orientation: 2,
+});
+
+// 图片上传成功处理
+const handleUploadSuccessMultiple = (response, file, fileList) => {
+  // 将上传成功的图片路径保存到 uploadedImages 中
+  if (response && response.imagePath) {
+    let temImagePath = 'http://localhost:3000' + response.imagePath;
+    uploadedImages.value = [temImagePath, ...uploadedImages.value]; // 更新图片路径
+    console.log('uploadedImages.value', uploadedImages.value)
+  }
+};
+
+// 文件大小限制
+const checkFileSizeMultiple = (file) => {
+  const isSmallEnough = file.size / 1024 / 1024 < 10; // 限制文件小于5MB
+  if (!isSmallEnough) {
+    ElMessage.error('文件过大，最大支持10MB');
+  }
+  return isSmallEnough;
+};
+
+// 引用上传组件
+const uploadRef = ref(null);
+const submitDataMultiple = async () => {
+  try {
+    const data = {
+      ...addFormDataMultiple.value,
+      image_path: uploadedImages.value, // 提交所有上传的图片路径
+    };
+
+    // 发送请求到后端，保存图片信息
+    const res = await addAIImageMultiple(data);
+    ElMessage.success('提交成功');
+    getAIImageListReq();
+    uploadRef.value.clearFiles(); // 调用 clearFiles 方法清除文件
+    addVisibleMultiple.value = false // 关闭弹窗
+  } catch (error) {
+    ElMessage.error('提交失败');
+  }
+
+}
 onMounted(() => {
   getAIImageListReq();
 });
