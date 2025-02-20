@@ -100,10 +100,10 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="addVisibleMultiple" title="批量上传" center width="600">
+    <el-dialog v-model="addVisibleMultiple" title="批量上传" center width="1600">
       <div class="upload-container">
         <!-- 批量上传组件 -->
-        <el-upload class="upload-box" name="image" action="http://localhost:3000/api/aiImages/upload-ai-image"
+        <el-upload class="upload-box" name="images" action="http://localhost:3000/api/aiImages/upload-ai-images"
           list-type="picture-card" :on-success="handleUploadSuccessMultiple" :before-upload="checkFileSizeMultiple"
           :show-file-list="true" accept="image/*" multiple ref="uploadRef">
           <el-button type="primary">上传图片</el-button>
@@ -308,13 +308,15 @@ const addFormDataMultiple = ref({
 
 // 图片上传成功处理
 const handleUploadSuccessMultiple = (response, file, fileList) => {
-  // 将上传成功的图片路径保存到 uploadedImages 中
-  if (response && response.imagePath) {
-    let temImagePath = 'http://localhost:3000' + response.imagePath;
-    uploadedImages.value = [temImagePath, ...uploadedImages.value]; // 更新图片路径
-    console.log('uploadedImages.value', uploadedImages.value)
+  // 将新上传的图片路径添加到现有路径数组前面
+  if (response && response.imagePaths) {
+    const updatedImagePaths = response.imagePaths.map(path => `http://localhost:3000${path}`);
+
+    // 将新图片路径添加到已上传路径前面
+    uploadedImages.value = [...updatedImagePaths, ...uploadedImages.value];
   }
 };
+
 
 // 文件大小限制
 const checkFileSizeMultiple = (file) => {
