@@ -4,7 +4,7 @@
       <el-button type="primary" style="margin-left: 20px" @click="openAdd(null)">
         新增
       </el-button>
-      <el-button type="primary" style="margin-left: 20px" @click="addVisibleMultiple = true">
+      <el-button type="primary" style="margin-left: 20px" @click="openAddMultiple">
         批量新增
       </el-button>
       <el-button type="danger" style="margin-left: 20px" @click="deleteAllAIImagesReq">
@@ -305,6 +305,11 @@ const addFormDataMultiple = ref({
   description: '',
   orientation: 2,
 });
+
+const openAddMultiple = () => {
+  addVisibleMultiple.value = true
+  uploadedImages.value = []
+}
 
 // 图片上传成功处理
 const handleUploadSuccessMultiple = (response, file, fileList) => {
