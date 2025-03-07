@@ -63,9 +63,9 @@
     <el-dialog v-model="addVisible" :title="dialogTitle" center width="600">
       <div class="upload-container">
         <!-- 上传组件 -->
-        <el-upload v-if="!uploadedImage" class="upload-box" name="image"
-          action="http://localhost:3000/api/aiImages/upload-ai-image" list-type="picture-card"
-          :on-success="handleUploadSuccess" :before-upload="checkFileSize" :show-file-list="false" accept="image/*">
+        <el-upload v-if="!uploadedImage" class="upload-box" name="image" :action="`${url}/api/aiImages/upload-ai-image`"
+          list-type="picture-card" :on-success="handleUploadSuccess" :before-upload="checkFileSize"
+          :show-file-list="false" accept="image/*">
           <el-button type="primary">上传图片</el-button>
         </el-upload>
 
@@ -103,7 +103,7 @@
     <el-dialog v-model="addVisibleMultiple" title="批量上传" center width="1600">
       <div class="upload-container">
         <!-- 批量上传组件 -->
-        <el-upload class="upload-box" name="images" action="http://localhost:3000/api/aiImages/upload-ai-images"
+        <el-upload class="upload-box" name="images" :action="`${url}/api/aiImages/upload-ai-images`"
           list-type="picture-card" :on-success="handleUploadSuccessMultiple" :before-upload="checkFileSizeMultiple"
           :show-file-list="true" accept="image/*" multiple ref="uploadRef">
           <el-button type="primary">上传图片</el-button>
@@ -145,6 +145,7 @@ import { addAIImage, addAIImageMultiple, getAIImageList, updateAIImage, deleteAI
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 
+const url = import.meta.env.VITE_API_BASE_URL
 const router = useRouter();
 
 const isLoading: any = ref(false);
@@ -190,7 +191,7 @@ const uploadedImage = ref("");
 // 上传成功回调
 const handleUploadSuccess = (response) => {
   ElMessage.success("图片上传成功！");
-  uploadedImage.value = 'http://localhost:3000' + response.imagePath; // 只存储最新的一张图片
+  uploadedImage.value = url + response.imagePath; // 只存储最新的一张图片
 };
 
 // 限制文件大小
@@ -315,7 +316,7 @@ const openAddMultiple = () => {
 const handleUploadSuccessMultiple = (response, file, fileList) => {
   // 将新上传的图片路径添加到现有路径数组前面
   if (response && response.imagePaths) {
-    const updatedImagePaths = response.imagePaths.map(path => `http://localhost:3000${path}`);
+    const updatedImagePaths = response.imagePaths.map(path => url + path);
 
     // 将新图片路径添加到已上传路径前面
     uploadedImages.value = [...updatedImagePaths, ...uploadedImages.value];

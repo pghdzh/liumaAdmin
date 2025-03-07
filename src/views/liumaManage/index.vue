@@ -67,7 +67,7 @@
       <div class="upload-container">
         <!-- 上传组件 -->
         <el-upload v-if="!uploadedImage" class="upload-box" name="image"
-          action="http://localhost:3000/api/liuma-media/upload" list-type="picture-card"
+          :action="`${url}/api/liuma-media/upload`" list-type="picture-card"
           :on-success="handleUploadSuccess" :before-upload="checkFileSize" :show-file-list="false" accept="image/*">
           <el-button type="primary">上传图片</el-button>
         </el-upload>
@@ -112,7 +112,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
+const url = import.meta.env.VITE_API_BASE_URL
 const isLoading: any = ref(false);
 const tableData: any = ref([]);
 // 格式化日期
@@ -154,7 +154,7 @@ const uploadedImage = ref("");
 // 上传成功回调
 const handleUploadSuccess = (response) => {
   ElMessage.success("图片上传成功！");
-  uploadedImage.value = 'http://localhost:3000' + response.image_url; // 只存储最新的一张图片
+  uploadedImage.value = url + response.image_url; // 只存储最新的一张图片
 };
 
 // 限制文件大小
