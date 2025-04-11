@@ -42,6 +42,11 @@ const navList = reactive<any>([
     title: 'AI绘图管理',
     icon: 'Menu',
     path: '/AIGeneratedImageManage'
+  },
+  {
+    title: '抽奖人管理',
+    icon: 'Menu',
+    path: '/LuckyDrawView'
   }
 
 ]);

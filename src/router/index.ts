@@ -32,6 +32,10 @@ const router = createRouter({
           name: "AIGeneratedImageManage",
           component: () => import("@/views/AIGeneratedImageManage/index.vue"),
         },
+        {
+          path: "/LuckyDrawView",
+          component: () => import("@/views/LuckyDrawView/index.vue"),
+        },
       ],
     },
   ],
